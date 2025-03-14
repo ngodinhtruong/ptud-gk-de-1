@@ -59,13 +59,17 @@ def load_user(user_id):
 
 # Routes
 @app.route('/')
-@login_required
 def index():
     blogs = Blog.query.order_by(Blog.created_at.desc()).all()
     return render_template('index.html', blogs=blogs)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def register():
+    # Chuyển hướng nếu đã đăng nhập
+    if current_user.is_authenticated:
+        flash('Bạn đã đăng nhập!', 'info')
+        return redirect(url_for('index'))
+
     if request.method == 'POST':
         username = request.form.get('username')
         email = request.form.get('email')
@@ -92,6 +96,11 @@ def register():
 
 @app.route('/signin', methods=['GET', 'POST'])
 def login():
+    # Chuyển hướng nếu đã đăng nhập
+    if current_user.is_authenticated:
+        flash('Bạn đã đăng nhập!', 'info')
+        return redirect(url_for('index'))
+
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -111,7 +120,7 @@ def login():
 def logout():
     logout_user()
     flash('Đã đăng xuất thành công!', 'success')
-    return redirect(url_for('login'))
+    return redirect(url_for('index'))
 
 @app.route('/blog/new', methods=['GET', 'POST'])
 @login_required
@@ -146,7 +155,6 @@ def new_blog():
     return render_template('new_blog.html')
 
 @app.route('/blog/<int:blog_id>')
-@login_required
 def blog_detail(blog_id):
     blog = Blog.query.get_or_404(blog_id)
     return render_template('blog_detail.html', blog=blog)

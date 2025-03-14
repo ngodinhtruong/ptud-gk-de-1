@@ -3,63 +3,130 @@
 {% block title %}Trang chủ{% endblock %}
 
 {% block content %}
+{% if not current_user.is_authenticated %}
+<!-- Welcome Page for Non-logged in Users -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4 mb-4">Chào mừng đến với Blog</h1>
+            <p class="lead mb-4">Nơi chia sẻ những câu chuyện thú vị và kết nối cộng đồng</p>
+            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg px-4 gap-3">
+                    <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
+                </a>
+                <a href="{{ url_for('register') }}" class="btn btn-outline-secondary btn-lg px-4">
+                    <i class="fas fa-user-plus me-2"></i>Đăng ký
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-blog fa-3x text-primary mb-3"></i>
+                    <h3 class="card-title h5">Bài viết đa dạng</h3>
+                    <p class="card-text">Khám phá những bài viết thú vị từ cộng đồng</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-comments fa-3x text-primary mb-3"></i>
+                    <h3 class="card-title h5">Tương tác</h3>
+                    <p class="card-text">Thảo luận và chia sẻ ý kiến với mọi người</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                    <h3 class="card-title h5">Cộng đồng</h3>
+                    <p class="card-text">Kết nối với những người có cùng sở thích</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<!-- Blog List for Logged in Users -->
 <div class="container mt-4">
-    {% if current_user.is_authenticated %}
-    <!-- Header -->
-     <h1 style="text-align: center; color: #000000; font-size: 30px; font-weight: bold;">Bài viết mới nhất</h1>
-    <div claPosts -->
     <div class="row">
-        {% for blog in blogs %}
-        <div class="col-md-12 mb-4">
-            <div class="card shadow-sm h-100">
-                <img src="{{ blog.image_url }}" class="card-img-top" alt="{{ blog.title }}" style="height: 300px; object-fit: cover;">
-                <div class="card-body">
-                    <h5 class="card-title">{{ blog.title }}</h5>
-                    <div class="d-flex align-items-center text-muted mb-3">
-                        <i class="fas fa-user me-2"></i>
-                        <span>{{ blog.author.username }}</span>
-                        <i class="fas fa-clock ms-3 me-2"></i>
-                        <span>{{ blog.created_at.strftime('%d/%m/%Y %H:%M') }}</span>
+        <div class="col-md-8">
+            <h2 class="mb-4">Bài viết mới nhất</h2>
+            {% if blogs %}
+            {% for blog in blogs %}
+            <div class="card mb-4 shadow-sm">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ blog.image_url }}" class="img-fluid rounded-start h-100" alt="{{ blog.title }}" style="object-fit: cover;">
                     </div>
-                    <p class="card-text">{{ blog.content[:200] }}{% if blog.content|length > 200 %}...{% endif %}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <a href="{{ url_for('blog_detail', blog_id=blog.id) }}" class="btn btn-primary me-2">
-                                <i class="fas fa-book-reader"></i> Đọc thêm
-                            </a>
-                            <a href="{{ url_for('blog_detail', blog_id=blog.id) }}#comments" class="btn btn-outline-primary">
-                                <i class="fas fa-comments"></i> Bình luận
-                            </a>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ blog.title }}</h5>
+                            <p class="card-text text-muted mb-2">
+                                <i class="fas fa-user me-1"></i>{{ blog.author.username }}
+                                <span class="ms-3">
+                                    <i class="fas fa-clock me-1"></i>{{ blog.created_at.strftime('%d/%m/%Y %H:%M') }}
+                                </span>
+                            </p>
+                            <p class="card-text">{{ blog.content[:200] }}{% if blog.content|length > 200 %}...{% endif %}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{{ url_for('blog_detail', blog_id=blog.id) }}" class="btn btn-primary">
+                                    <i class="fas fa-eye me-1"></i>Xem chi tiết
+                                </a>
+                                <div class="text-muted">
+                                    <i class="fas fa-comment me-1"></i>{{ blog.comments|length }} bình luận
+                                </div>
+                            </div>
                         </div>
-                        <small class="text-muted">
-                            <i class="fas fa-comment"></i> {{ blog.comments|length }} bình luận
-                        </small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="text-center py-5">
+                <p class="text-muted mb-0">Chưa có bài viết nào.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">
+                        <i class="fas fa-user-circle me-2"></i>Thông tin cá nhân
+                    </h5>
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://ui-avatars.com/api/?name={{ current_user.username }}&background=random" 
+                             alt="{{ current_user.username }}" 
+                             class="rounded-circle me-3"
+                             style="width: 48px; height: 48px;">
+                        <div>
+                            <h6 class="mb-0">{{ current_user.username }}</h6>
+                            <small class="text-muted">{{ current_user.email }}</small>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('user_profile', user_id=current_user.id) }}" class="btn btn-outline-primary">
+                            <i class="fas fa-user me-2"></i>Xem hồ sơ
+                        </a>
+                        {% if current_user.is_actor() %}
+                        <a href="{{ url_for('new_blog') }}" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Tạo bài viết mới
+                        </a>
+                        {% endif %}
+                        <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">
+                            <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-        {% else %}
-        <div class="col-12 text-center">
-            <div class="p-5 bg-light rounded">
-                <h3>Chưa có bài viết nào</h3>
-                <p class="text-muted">Hãy là người đầu tiên chia sẻ câu chuyện của bạn!</p>
-            </div>
-        </div>
-        {% endfor %}
     </div>
-    {% else %}
-    <div class="text-center py-5">
-        <h2 class="mb-4">Chào mừng đến với Blog</h2>
-        <p class="lead text-muted mb-4">Vui lòng đăng nhập để xem và chia sẻ bài viết</p>
-        <div class="d-flex justify-content-center gap-3">
-            <a href="{{ url_for('login') }}" class="btn btn-primary">
-                <i class="fas fa-sign-in-alt"></i> Đăng nhập
-            </a>
-            <a href="{{ url_for('register') }}" class="btn btn-outline-primary">
-                <i class="fas fa-user-plus"></i> Đăng ký
-            </a>
-        </div>
-    </div>
-    {% endif %}
 </div>
+{% endif %}
 {% endblock %}
