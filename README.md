@@ -34,12 +34,25 @@ Dự án sử dụng layout Single Column (Một Cột) với các đặc điể
 - Xem thông tin cá nhân
 
 ### Dashboard
-- Hiển thị thống kê tổng quan về blog
-- Số lượng bài viết
-- Số lượng bình luận
-- Số lượng người dùng
-- Các bài viết mới nhất
-- Các bình luận mới nhất
+- Hiển thị thống kê tổng quan về blog:
+  - Số lượng bài viết đã đăng
+  - Số lượng bình luận trên toàn bộ blog
+  - Số lượng người dùng đã đăng ký
+  - Số lượng Actor và User
+- Hiển thị các bài viết mới nhất:
+  - Tiêu đề bài viết
+  - Tác giả
+  - Ngày đăng
+  - Số lượng bình luận
+- Hiển thị các bình luận mới nhất:
+  - Nội dung bình luận
+  - Bài viết được bình luận
+  - Người bình luận
+  - Thời gian bình luận
+- Biểu đồ thống kê:
+  - Biểu đồ số lượng bài viết theo tháng
+  - Biểu đồ số lượng bình luận theo tháng
+  - Biểu đồ phân bố người dùng theo vai trò
 
 ## Cài đặt
 
@@ -81,7 +94,6 @@ python app.py
 - Password: actor123
 - Role: actor
 
-<<<<<<< HEAD
 - Username: actor2
 - Password: actor123
 - Role: actor
@@ -111,7 +123,6 @@ ptud-gk-de-1/
 │   ├── register.html # Trang đăng ký
 │   ├── new_blog.html # Trang tạo bài viết mới
 │   ├── blog_detail.html # Trang chi tiết bài viết
-│   ├── user.html     # Trang thông tin người dùng
 │   └── dashboard.html # Trang dashboard
 └── blog.db           # Database SQLite
 ```

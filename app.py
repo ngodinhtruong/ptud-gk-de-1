@@ -227,7 +227,7 @@ def edit_comment(blog_id, comment_id):
 @login_required
 def user_profile(user_id):
     user = User.query.get_or_404(user_id)
-    return render_template('user.html', user=user)
+    return render_template('dashboard.html', user=user)
 
 if __name__ == '__main__':
     with app.app_context():
