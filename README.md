@@ -2,11 +2,11 @@
 
 ## Thông tin cá nhân
 
-- Họ và tên: [Tên của bạn]
-- MSSV: [MSSV của bạn]
-- Lớp: [Lớp của bạn]
-- Môn học: Phát triển ứng dụng web
-- Giảng viên: [Tên giảng viên]
+
+- Họ và tên: Ngô Trường Định
+- MSSV: 22641171
+- STT: 81
+
 
 ## Mô tả dự án
 
