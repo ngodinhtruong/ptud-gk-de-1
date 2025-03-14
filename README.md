@@ -81,6 +81,7 @@ python app.py
 - Password: actor123
 - Role: actor
 
+<<<<<<< HEAD
 - Username: actor2
 - Password: actor123
 - Role: actor
