@@ -1,6 +1,7 @@
 @echo off
 echo ====================================
-echo    Cài đặt Blog Application
+echo    Install Blog Application
+echo    Author: Ngo Truong Dinh - 22641171 - stt: 81
 echo ====================================
 echo.
 
