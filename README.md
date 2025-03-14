@@ -80,9 +80,12 @@ python app.py
 
 ## Tài khoản mặc định
 
-- Admin:
-  - Username: admin
-  - Password: admin123
+- Actor:
+  - Username: actor1
+  - Password: actor123
+- User:
+  - username: user1
+  - password: user123
 
 ## Cấu trúc thư mục
 
